@@ -26,7 +26,7 @@ printf("A intersect B="),printset(c);
 difference(a,b,c);
 printf("A -B="),printset(c);
 }
-void readset(struct bit a[],int n)
+void readset(struct bit a[],int n) //to read a set and save it in the string
 {
 int i,x,k;
 printf("enter %d elements:",n);
@@ -34,7 +34,7 @@ for(i=0;i<n;i++)
 {
 scanf("%d",&x);
 for(k=0;k<size;++k)
-if (uset[k]==x)
+if (uset[k]==x) //if x is a member of universal set , set 1 corresponding to x in a[]
 {
 a[k].x=1;
 break;
@@ -42,7 +42,7 @@ break;
 }
 return;
 }
-void printset(struct bit a[])
+void printset(struct bit a[]) //to print a set from bit string representation 
 {
 int k;
 printf("{");
@@ -53,7 +53,7 @@ printf("}\n");
 return;
 }
 
-void unionset(struct bit a[],struct bit b[],struct bit c[])
+void unionset(struct bit a[],struct bit b[],struct bit c[]) //to find union
 {
 int k;
 for(k=0;k<size;++k)
@@ -61,7 +61,7 @@ c[k].x=a[k].x | b[k].x;
 return;
 }
 
-void interset(struct bit a[],struct bit b[],struct bit c[])
+void interset(struct bit a[],struct bit b[],struct bit c[]) //intersct
 {
 int k;
 for(k=0;k<size;++k)
@@ -69,7 +69,7 @@ c[k].x=a[k].x & b[k].x;
 return;
 }
 
-void difference(struct bit a[],struct bit b[],struct bit c[])
+void difference(struct bit a[],struct bit b[],struct bit c[]) // find the difference
 {
 int k;
 for(k=0;k<size;++k)
