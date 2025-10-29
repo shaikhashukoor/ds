@@ -42,7 +42,7 @@ case 5 :exit(0);
 }
 }
 }
-struct node*insert(struct node*s,int data)
+struct node*insert(struct node*s,int data) //function to insert
 {
 struct node*t;
 t=(struct node*)malloc(sizeof (struct node));
@@ -53,7 +53,7 @@ if(s!=0)
 s->left=t;
 return t;
 }
-void display(struct node*s)
+void display(struct node*s) //to display
 {
 while(s!=0)
 {
@@ -62,7 +62,7 @@ s=s->right;
 }
 return ;
 }
-struct node*search(struct node*s,int data)
+struct node*search(struct node*s,int data) //to delete
 {
 while(s!=0 && data!= s->data)
 s=s->right;
@@ -77,9 +77,9 @@ t=search(s,data);
 if(t==0)
 printf("not founded");
 else
- if(t->left==0)
+ if(t->left==0) //first node
  {
-s=s->right;
+s=s->right; //move pointer to next node
 if(t->right!=0)
 s->left=0;
 free(t);
@@ -87,7 +87,7 @@ free(t);
 else
 {
 t->left->right=t->right;
-if(t->right!=0)
+if(t->right!=0) //interier node
 t->right->left=t->left;
 free(t);
 }
