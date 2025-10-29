@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #define SIZE 10
-int que [SIZE],front=0,rear=0;
+int que [SIZE],front=0,rear=0; //empty queue
 void main()
 {
 int opt,item,ans;
@@ -35,9 +35,9 @@ printf("not founded...");
 break;
 case 5 :exit(0);
 }
+}//end of while
 }
-}
-void enque(int data)
+void enque(int data) // to insert an item
 {
 int r1;
 r1=(rear+1)%SIZE;
@@ -49,7 +49,7 @@ que[rear]=data;
 }
 return;
 }
-int deque()
+int deque() //to delete an item
 {
 if(front==rear)
 {
@@ -61,7 +61,7 @@ front=(front+1)%SIZE;
 return que[front];
 }
 }
-void display()
+void display() //to display an item
 {
 int f=front,r=rear;
 while(f!=r)
@@ -71,7 +71,7 @@ printf("%d \n",que[f]);
 }
 return;
 }
-int search(int item)
+int search(int item) //to serach an item
 {
 int f =front,r=rear;
 while(f!=r)
