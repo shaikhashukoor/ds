@@ -29,7 +29,7 @@ printdata(arr3,n1+n2);
 }
 
 
-void readdata(int a[],int n)
+void readdata(int a[],int n) // to read an array
 {
 int i;
 printf(" \n enter %d numbers:",n);
@@ -39,7 +39,7 @@ return ;
 }
 
 
-void printdata(int a[],int n)
+void printdata(int a[],int n) // to print
 {
 int i;
 for(i=0;i<n;i++)
@@ -47,7 +47,7 @@ printf("%d  ",a[i]);
 return ;
 }
 
-void sortdata(int a[],int n)
+void sortdata(int a[],int n)//function for sorting
 {
 int i,j,temp;
 for(i=0;i<n-1;i++)
@@ -62,11 +62,11 @@ return ;
 }
 
 
-void mergedata(int a[], int b[],int c[], int n1,int n2)
+void mergedata(int a[], int b[],int c[], int n1,int n2) // for mergging
 {
 int i,j,k;
 i=j=k=0;
-while(i<n1 && j<n2)
+while(i<n1 && j<n2) //compare and copy elements
 if(a[i]<b[j])
 {
 c[k]=a[i];
@@ -80,13 +80,13 @@ c[k]=b[j];
 j++;
 k++;
 }
-while(i<n1)
+while(i<n1) //copy remaining elemets of a[]
 {
 c[k]=a[i];
 i++;
 k++;
 }
-while(j<n2)
+while(j<n2) //copy remaimg alemets of b[]
 {
 c[k]=b[j];
 j++;
