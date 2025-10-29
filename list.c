@@ -39,7 +39,7 @@ case 5 :exit(0);
 }
 }
 }
-struct node*push(struct node*list,int data)
+struct node*push(struct node*list,int data) //to insert
 {
 struct node*t;
 t=(struct node*)malloc(sizeof (struct node));
@@ -48,7 +48,7 @@ t->next=list;
 list=t;
 return list;
 }
-struct node*pop(struct node*list)
+struct node*pop(struct node*list) // to delete
 {
 struct node*t=list;
 if(list!=(struct node*)0)
@@ -61,7 +61,7 @@ else
 printf("list is null");
 return list;
 }
-void display(struct node*list)
+void display(struct node*list) //to display
 {
 while(list!= NULL)
 {
@@ -70,7 +70,7 @@ list=list->next;
 }
 printf("\n");
 }
-int search(struct node*list,int item)
+int search(struct node*list,int item) //to serach
 {
 while(list!= NULL)
 {
