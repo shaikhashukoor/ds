@@ -42,7 +42,7 @@ case 5 :exit(0);
 }
 }
 }
-struct node*search(struct node*root,int data)
+struct node*search(struct node*root,int data) //function to search
 {
 while(root!=0 && root->data!=data)
 if(data<root->data)
@@ -51,12 +51,12 @@ else
 root=root->rchild;
 return root;
 }
-struct node*insert(struct node*root,int data)
+struct node*insert(struct node*root,int data)//function to insert
 {
 struct node*t,*par=0,*t1;
 t=(struct node*)malloc(sizeof (struct node));
 t->data=data;
-t->lchild=t->rchild=0;
+t->lchild=t->rchild=0; //leaf
 if(root==0)
 root=t;
 else if(search (root,data)!=0)
@@ -72,14 +72,14 @@ t1=t1->lchild;
 else
 t1=t1->rchild;
 }
-if(data<par->data)
+if(data<par->data) //insreting
 par->lchild=t;
 else
 par->rchild=t;
 }
 return root;
 }
-void inorder(struct node*root)
+void inorder(struct node*root) //function to traverse in inorder
 {
 if(root!=0)
 {
@@ -88,10 +88,10 @@ printf("%d \n",root->data);
 inorder(root->rchild);
 }
 }
-struct node* delete(struct node*root,int data)
+struct node* delete(struct node*root,int data) //to delete a node
 {
 struct node* t=root,*par=0,*suc,*sucpar;
-while(t!=0 && t->data!=data)
+while(t!=0 && t->data!=data) //searching
 {
 par=t;
 if(data<t->data)
@@ -103,29 +103,29 @@ if(t==0)
 printf("%d not founded...",data);
 else
 {
-if(t->lchild==0 && t->rchild==0)
+if(t->lchild==0 && t->rchild==0)//leaf node
 {
 if(par==0)
 root=0;
-else if (data<par->data)
+else if (data<par->data)//leaf with parent
 par->lchild=0;
 else
 par->rchild=0;
 }
-else if (t->lchild==0 || t->rchild==0)
+else if (t->lchild==0 || t->rchild==0)//one child
 {
-if(par==0)
+if(par==0)//root is to be deleted
 root=root->lchild==0?root->rchild:root->lchild;
 else if(data<par->data)
 par->lchild=t->lchild==0?t->rchild:t->lchild;
 else
 par->rchild=t->lchild==0?t->rchild:t->lchild;
 }
-else
+else //two child
 {
 sucpar=t;
 suc=t->rchild;
-while(suc->lchild!=0)
+while(suc->lchild!=0) //inorder succesor
 {
 sucpar=suc;
 suc=suc->lchild;
