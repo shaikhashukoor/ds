@@ -1,209 +1,96 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 #define SIZE 10
-struct node //to represent vertex and edge
-{
+// Node structure for vertex and edges
+struct node {
 int data;
-int status;
-struct node*next,*point;
+int status; // 0 = unvisited, 1 = visited
+struct node *next, *point;
 };
-struct topsort // to represent vertices to topological sort
-{
-int n;
-struct topsort* next;
-};
-struct node*q[10]; //to maintain queue
-int front=0,rear=0; //queue handling pointers
-struct node *g=0; // to store graph
-struct topsort*tsort=0; //to store topological sort order
-
-//to add vertex
-void addvertex(int n){
-struct node*t=(struct node*)malloc(sizeof(struct node));
-t->data=n;
-t->point=0;
-t->next=g;
-g=t;
+struct node *g = NULL; // Graph head pointer
+// Function to add a vertex
+void addvertex(int n) {
+struct node *t = (struct node *)malloc(sizeof(struct node));
+t->data = n;
+t->status = 0;
+t->point = NULL;
+t->next = g;
+g = t;
 }
-
-//function to find the vertex node address
-struct node*find(int n)
-{
-struct node*t=g;
-while(t!=0 && t->data!=n)
-t=t->next;
+// Function to find a vertex
+struct node *find(int n) {
+struct node *t = g;
+while (t != NULL && t->data != n)
+t = t->next;
 return t;
 }
-
-//function to add an edge
-void addedge(int u, int v)
-{
-struct node *v1,*v2,*t;
-v1=find(u); //vertex address
-v2=find(v); //vertex address
-t=(struct node*)malloc(sizeof(struct node)); 
-
-t->next=v1->point;
-v1->point=t;
-t->point=v2;
-return;
+// Function to add a directed edge u -> v
+void addedge(int u, int v) {
+struct node *v1, *v2, *t;
+v1 = find(u);
+v2 = find(v);
+if (v1 == NULL || v2 == NULL) return;
+t = (struct node *)malloc(sizeof(struct node));
+t->next = v1->point;
+t->point = v2;
+v1->point = t;
 }
-
-//function to print a graph
-void printgraph()
-{
-struct node*t1,*t2,*t3;
-printf("\n vertex  \t edge list \n");
-t1=g;
-while(t1!=0)
-{
-printf("\n %d.............\t",t1->data);
-t2=t1->point;
-while(t2!=0)
-{
-t3=t2->point;
-printf("%d,",t3->data);
-t2=t2->next;
+// Function to print the graph
+void printgraph() {
+struct node *t1, *t2, *t3;
+printf("\nVertex\tEdges List\n");
+t1 = g;
+while (t1 != NULL) {
+printf("%d\t", t1->data);
+t2 = t1->point;
+while (t2 != NULL) {
+t3 = t2->point;
+printf("%d ", t3->data);
+t2 = t2->next;
 }
-t1=t1->next;
+printf("\n");
+t1 = t1->next;
 }
 }
-
-//insert nodes in topological order list at the beggining
-void topsorting (int n)
-{
-struct topsort *z=(struct topsort*)malloc(sizeof(struct topsort));
-z->n=n;
-z->next=tsort;
-tsort=z;
-}
-
-//printing topo;ogical sort list
-void topsortout()
-{
-while(tsort!=0)
-{
-printf("%d,",tsort->n);
-tsort=tsort->next;
+// Recursive DFS visit
+void dfs_visit(struct node *u) {
+struct node *t, *adj;
+u->status = 1; // Mark as visited
+printf("%d ", u->data);
+t = u->point;
+while (t != NULL) {
+adj = t->point;
+if (adj->status == 0)
+dfs_visit(adj);
+t = t->next;
 }
 }
-
-//dfs traversal
-void dfsvisit(struct node*u)
-{
-struct node*t,*t1;
-u->status=1;   //visit vertex
-printf("%d,",u->data);
-t=u->point;
-while(t!=0)
-{
-t1=t->point;
-if(t1->status==0) //if not visited
-dfsvisit(t1);
-t=t->next;
+// DFS traversal from a given start node
+void dfs(struct node *start) {
+struct node *t = g;
+while (t != NULL) {
+t->status = 0; // Mark all as unvisited
+t = t->next;
 }
-topsorting(u->data); //store the node topological sort list
-return;
+dfs_visit(start);
 }
-
-
-//dfs search
-void dfs(struct node*g1)
-{
-struct node*t=g;
-while(t!=0)
-{
-t->status=0;   //list is not visited
-t=t->next;
-}
-dfsvisit(g1);
-}
-
-//enque operation
-void enque(struct node*s)
-{
-int r1=rear;
-r1=(r1+1)%SIZE;
-if(front==r1)
-{
-printf("q full");
-exit(1);
-}
-rear=r1;
-q[rear]=s;
-}
-
-//empty-to test queue is empty or not
-int emptyq()
-{
-if(front==rear)
-return 1;
-else
-return 0;
-}
-
-//deque
-struct node* deque()
-{
-if (emptyq())
-{
-printf("empty q");
-exit(2);
-}
-front=(front+1)%SIZE;
-return q[front];
-}
-
-//bfs
-void bfs(struct node*s)
-{
-struct node*t=g,*t1,*u;
-while(t!=0)
-{
-t->status=0; //set all vertices as visited
-t=t->next;
-}
-s->status=1; //visit start vetex
-printf("%d,",s->data);
-enque(s);
-while(!emptyq())
-{
-u=deque();
-t=u->point;
-while(t!=0)
-{
-t1=t->point;
-if(t1->status==0)
-{
-printf("%d,",t1->data);
-t1->status=1;
-enque(t1);
-}
-t=t->next;
-}
-}
-}
-//main function to demonstrate graph search and topological sort
-
-void main()
-{
+// Main function
+int main() {
 addvertex(1);
 addvertex(2);
 addvertex(3);
 addvertex(4);
 addvertex(5);
-addedge(1,2);
-addedge(1,4);
-addedge(2,3);
-addedge(2,4);
-addedge(4,3);
-addedge(4,5);
-printf("the graph is : \n");
+addedge(1, 2);
+addedge(1, 4);
+addedge(2, 3);
+addedge(2, 4);
+addedge(4, 3);
+addedge(4, 5);
+printf("The graph is:\n");
 printgraph();
-printf("\n dfs traverse: \n");
+printf("\nDFS Traversal starting from vertex 1: ");
 dfs(find(1));
-printf("\n bfs traverse: \n");
-bfs(find(1));
-printf(" \ntopological sort order is  : \n");
-topsortout();
+printf("\n");
+return 0;
 }
