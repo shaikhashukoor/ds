@@ -9,7 +9,7 @@ struct node {
 };
 
 int stk[SIZE], sp = 0;
-
+//add new vertex to the graph
 struct node *addvertex(struct node *g, int n) {   
     struct node *t = (struct node *)malloc(sizeof(struct node));
     t->data = n;
@@ -19,14 +19,14 @@ struct node *addvertex(struct node *g, int n) {
     g = t;
     return g; 
 }
-
+//find vertex in the graph
 struct node *find(struct node *g, int n) {
     struct node *t = g;
     while (t != 0 && t->data != n)
         t = t->next;
     return t;
 }
-
+// add directed edge b/w two vertices
 void addedge(struct node *g, int u, int v) {
     struct node *v1, *v2, *t;
     v1 = find(g, u);
@@ -37,7 +37,7 @@ void addedge(struct node *g, int u, int v) {
     t->point = v2;
     return;
 }
-
+//print graph
 void printgraph(struct node *g) {
     struct node *t1, *t2, *t3;
     printf("\n Vertex \t Edge list\n");
@@ -53,7 +53,7 @@ void printgraph(struct node *g) {
         t1 = t1->next;
     }
 }
-
+//for dfs visit
 void dfs_visit(struct node *u) {
     struct node *t, *t1;
     u->status = 1;
@@ -94,7 +94,7 @@ void dfs_visit1(struct node *u) {
         t = t->next;
     }
 }
-
+//find strongly connented components
 void dfs1(struct node *g1) {
     struct node *t = g1;
     while (t != 0) {
@@ -109,7 +109,7 @@ void dfs1(struct node *g1) {
         }
     }
 }
-
+//compute the transpose of the graph
 struct node *graph_transpose(struct node *g) {
     struct node *gt = 0, *t = g, *t1, *t2;
     while (t != 0) {
